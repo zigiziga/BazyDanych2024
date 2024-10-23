@@ -1,0 +1,69 @@
+create table postac(
+id_postaci INT primary key AUTO_INCREMENT,
+nazwa VARCHAR(40),
+rodzaj ENUM('wiking', 'ptak', 'kobieta'),
+data_ur DATE,
+wiek INT UNSIGNED);
+
+INSERT INTO postac(
+nazwa, rodzaj, data_ur, wiek) VALUES
+('Bjorn', 'wiking', '1990-08-15', 34),
+('Drozd', 'ptak', '2000-10-20', 24),
+('Tesciowa', 'kobieta', '1924-05-23', 100);
+
+UPDATE postac SET data_ur = '1936-05-23', wiek = 88 WHERE nazwa = 'Tesciowa';
+
+CREATE TABLE walizka(
+id_walizki INT AUTO_INCREMENT,
+pojemnosc INT UNSIGNED,
+kolor ENUM('rozowy', 'czerwony', 'teczowy', 'zolty'),
+id_wlasciciela INT,
+PRIMARY KEY (id_walizki),
+FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci));
+
+ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+
+INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES
+(200, 'czerwony', 1),
+(125, 'zolty', 3);
+
+CREATE TABLE izba(
+adres_budynku VARCHAR(50),
+nazwa_izby VARCHAR(30),
+metraz INT UNSIGNED,
+id_wlasciciela INT DEFAULT NULL,
+CONSTRAINT pk_budynku PRIMARY KEY (adres_budynku, nazwa_izby),
+FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci));
+
+ALTER TABLE izba 
+ADD kolor ENUM('czerwony', 'czarny', 'zielony') DEFAULT 'czarny';
+
+INSERT INTO izba VALUES ('jana_pawla 13', 'spizarnia', 50, 1, 'zielony');
+
+CREATE TABLE przetwory(
+id_przetworu INT,
+rok_produkcji DATE DEFAULT '1654-01-01',
+id_wykonawcy INT,
+zawartosc VARCHAR(50),
+dodatek VARCHAR(50) DEFAULT 'papryczka chilli',
+id_konsumenta INT,
+PRIMARY KEY(id_przetworu),
+FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci),
+FOREIGN KEY(id_konsumenta) REFERENCES postac(id_postaci));
+
+INSERT INTO 
+
+INSERT INTO postac VALUES (DEFAULT, 'Jacek', 'wiking', '1999-03-15', 25),
+(DEFAULT, 'Adam', 'wiking', '1995-08-21', 29),
+(DEFAULT, 'Konrad', 'wiking', '1990-02-27', 34),
+(DEFAULT, 'Bartek', 'wiking', '2004-08-03', 20),
+(DEFAULT, 'Ignacy', 'wiking', '2002-01-31', 22);
+
+CREATE TABLE statek(
+nazwa_statku VARCHAR(40),
+rodzaj_statku ENUM('transportowiec', 'bojowy'),
+data_wodowania DATE,
+max_ladownosc INT UNSIGNED,
+PRIMARY KEY(nazwa_statku));
+
+
