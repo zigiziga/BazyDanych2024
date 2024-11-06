@@ -1,0 +1,31 @@
+INSERT INTO statek
+VALUES ('bialek', 'bojowy', '2024-11-06', 8),
+('ketats', 'transportowiec', '2024-11-06', 16);
+
+ALTER TABLE postac ADD funkcja VARCHAR(40);
+
+UPDATE postac
+SET funkcja = 'kapitan' WHERE nazwa = 'Bjorn'
+
+INSERT INTO przetwory (id_przetworu, rok_produkcji, id_wykonawcy, zawartosc, dodatek, id_konsumenta)
+VALUES (1, '2015-10-03', 1, 'bigos', 'papryczka chilli', 3);
+
+ADD FOREIGN KEY (id_statku) REFERENCES statek(nazwa_statku);
+ALTER TABLE postac ADD FOREIGN KEY (id_statku) REFERENCES statek(nazwa_statku);
+
+UPDATE postac
+SET id_statku = 'bialek' WHERE rodzaj = 'wiking';
+
+UPDATE postac
+SET id_statku = 'ketats' WHERE nazwa = 'Adam' OR nazwa = 'Drozd';
+
+DELETE FROM izba WHERE adres_budynku = 'jana_pawla 13';
+DROP TABLE izba;
+
+DELETE FROM postac
+WHERE nazwa != 'Bjorn' AND nazwa != 'Tesciowa'
+ORDER BY wiek DESC
+LIMIT 2;
+
+ALTER TABLE postac
+DROP PRIMARY KEY;
