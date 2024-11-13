@@ -1,0 +1,40 @@
+ALTER TABLE walizka DROP CONSTRAINT walizka_ibfk_1;
+ALTER TABLE walizka DROP COLUMN id_wlasciciela;
+
+ALTER TABLE przetwory DROP CONSTRAINT przetwory_ibfk_1;
+ALTER TABLE przetwory DROP CONSTRAINT przetwory_ibfk_2;
+ALTER TABLE przetwory DROP COLUMN id_konsumenta;
+ALTER TABLE przetwory DROP COLUMN id_wykonawcy;
+
+ALTER TABLE postac DROP CONSTRAINT postac_ibfk_1;
+ALTER TABLE postac DROP COLUMN id_postaci;
+
+
+ALTER TABLE postac ADD pesel VARCHAR(11) NOT NULL;
+
+UPDATE postac SET pesel = '97893215251' WHERE nazwa = 'Bjorn';
+UPDATE postac SET pesel = '78931265832' WHERE nazwa = 'Drozd';
+UPDATE postac SET pesel = '41268786872' WHERE nazwa = 'Tesciowa';
+UPDATE postac SET pesel = '12983090839' WHERE nazwa = 'Jacek';
+UPDATE postac SET pesel = '39853123512' WHERE nazwa = 'Bartek';
+UPDATE postac SET pesel = '87438323135' WHERE nazwa = 'Ignacy';
+
+ALTER TABLE postac ADD PRIMARY KEY (pesel);
+
+ALTER TABLE postac MODIFY rodzaj enum('wiking', 'ptak', 'kobieta', 'syrena');
+
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek, pesel)
+VALUES ('Gertruda Nieszczera', 'syrena', '2000-11-13', 24, '87257218042');
+
+UPDATE postac SET id_statku = 'ketats' WHERE NOT nazwa LIKE '%a%';
+
+ALTER TABLE postac MODIFY rodzaj enum('wiking', 'ptak', 'kobieta', 'syrena', 'wąż');
+
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek, pesel)
+VALUES ('Loko', 'waz', '1650-08-08', 374, '98236521723');
+
+CREATE TABLE marynarz (
+pesel VARCHAR(11) NOT NULL,
+nazwa VARCHAR(40),
+rodzaj ENUM('wiking', 'ptak', 'kobieta', 'syrena', 'waz'),
+data_ur
