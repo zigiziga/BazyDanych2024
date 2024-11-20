@@ -1,0 +1,30 @@
+ALTER TABLE statek MODIFY max_ladownosc float;
+UPDATE statek SET data_wodowania = '1995-11-06' WHERE nazwa_statku = 'ketats';
+
+UPDATE statek SET max_ladownosc = max_ladownosc * 0.70 WHERE data_wodowania > '1900-01-01' AND data_wodowania < '2000-01-01';
+
+ALTER TABLE postac ADD CHECK (wiek<1000);
+
+CREATE TABLE marynarz LIKE postac;
+INSERT INTO marynarz SELECT * FROM postac WHERE id_statku IS NOT NULL;
+
+UPDATE postac SET id_statku = NULL;
+UPDATE marynarz SET id_statku = NULL;
+
+DELETE FROM postac WHERE nazwa = 'Ignacy';
+DELETE FROM marynarz WHERE nazwa = 'Ignacy';
+
+DELETE FROM statek;
+DROP TABLE statek;
+
+CREATE TABLE zwierz (
+id_zwierz INT AUTO_INCREMENT,
+nazwa VARCHAR(40),
+wiek INT,
+PRIMARY KEY(id_zwierz));
+
+INSER INTO zwierz nazwa
+SELECT nazwa, wiek
+FROM postac
+WHERE rodzaj = 'ptak' OR rodzaj = 'waz';
+
