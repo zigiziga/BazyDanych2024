@@ -1,0 +1,17 @@
+SELECT AVG(waga) FROM kreatura WHERE rodzaj = 'wiking';
+SELECT rodzaj, COUNT(rodzaj), AVG(waga) FROM kreatura GROUP BY rodzaj;
+SELECT rodzaj, AVG(YEAR(CURDATE())-YEAR(dataUr)) AS wiek FROM kreatura GROUP BY rodzaj;
+
+SELECT rodzaj, SUM(waga) FROM zasob GROUP BY rodzaj;
+SELECT nazwa, AVG(waga) FROM zasob WHERE ilosc >= 4 GROUP BY nazwa HAVING SUM(waga * ilosc) > 10;
+SELECT rodzaj, COUNT(nazwa) FROM zasob GROUP BY rodzaj HAVING MIN(ilosc) > 1;
+
+SELECT SUM(ekwipunek.ilosc) , kreatura.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury GROUP BY kreatura.nazwa;
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu;
+SELECT kreatura.nazwa FROM kreatura LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury WHERE ekwipunek.idKreatury IS NULL;
+
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu  WHERE YEAR(kreatura.dataUr) BETWEEN 1670 AND 1679 AND kreatura.rodzaj = 'wiking';
+SELECT kreatura.nazwa, kreatura.dataUr FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu  WHERE zasob.rodzaj = 'jedzenie' ORDER BY kreatura.dataUr DESC LIMIT 5;
+SELECT CONCAT(kreatura1.nazwa, ' - ', kreatura2.nazwa) AS nazwa FROM kreatura AS kreatura1, kreatura AS kreatura2 WHERE kreatura1.idKreatury + 5 = kreatura2.idKreatury;
+
+SELECT kreatura.rodzaj, AVG(zasob.waga) FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu = zasob.idZasobu WHERE kreatura.rodzaj != 'malpa' AND kreatura.rodzaj != 'waz' AND ekwipunek.ilosc < 30 GROUP BY kreatura.rodzaj;
