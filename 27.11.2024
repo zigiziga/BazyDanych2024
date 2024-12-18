@@ -23,4 +23,4 @@ SELECT CONCAT(nazwa, '-', rodzaj) AS 'nazwa - rodzaj' FROM kreatura WHERE rodzaj
 SELECT * , ilosc * waga as 'calkowita waga' FROM zasob WHERE YEAR(dataPozyskania) BETWEEN 2000 AND 2007;
 SELECT * , 0.7 * waga * ilosc AS 'masa netto' , 0,3 * waga * ilosc AS 'masa odpadu' FROM zasob WHERE rodzaj = 'jedzenie';
 SELECT * FROM zasob WHERE rodzaj IS NULL;
-SELECT DISTINCT * FROM zasob WHERE nazwa LIKE 'Ba%' OR nazwa LIKE '%os' ORDER BY nazwa DESC; !!!
+SELECT DISTINCT * FROM zasob WHERE nazwa LIKE 'Ba%' OR nazwa LIKE '%os' ORDER BY rodzaj ASC;
