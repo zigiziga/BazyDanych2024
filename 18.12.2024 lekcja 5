@@ -13,4 +13,5 @@ SELECT etapy_wyprawy.idEtapu, sektor.nazwa FROM etapy_wyprawy INNER JOIN sektor 
 SELECT sektor.nazwa, IFNULL(COUNT(etapy_wyprawy.sektor), 0) AS 'Ile razy odwiedzany' FROM sektor LEFT JOIN etapy_wyprawy ON sektor.id_sektora = etapy_wyprawy.sektor LEFT JOIN wyprawa ON wyprawa.id_wyprawy = etapy_wyprawy.idWyprawy GROUP BY sektor.nazwa;
 SELECT k.nazwa, IF(COUNT(u.id_uczestnika) > 0, "Bral udzial w wyprawie", "Nie bral udzialu w wyprwie") AS 'Czy bral udzial w wyprawie?' FROM kreatura AS k LEFT JOIN uczestnicy AS u ON k.idKreatury = u.id_uczestnika GROUP BY k.nazwa;
 
-SELECT w.nazwa, SUM(LENGTH(ew.dziennik)) AS 'Liczba znakow' FROM wyprawa AS w INNER JOIN etapy_wyprawy AS ew ON w.id_wyprawy = ew.idWyprawy GROUP BY w.nazwa;
+SELECT w.nazwa, SUM(LENGTH(ew.dziennik)) AS 'Liczba znakow' FROM wyprawa AS w INNER JOIN etapy_wyprawy AS ew ON w.id_wyprawy = ew.idWyprawy GROUP BY w.nazwa HAVING SUM(LENGTH(ew.dziennik)) < 400;
+SELECT w.nazwa, (SUM(z.waga * e.ilosc) / COUNT(DISTINCT(u.id_uczestnika))) AS sw FROM wyprawa AS w LEFT JOIN uczestnicy AS u ON w.id_wyprawy = u.id_wyprawy LEFT JOIN ekwipunek AS e ON u.id_uczestnika = e.idKreatury LEFT JOIN zasob AS z ON e.idZasobu = z.idZasobu GROUP BY w.nazwa HAVING sw > 0;
