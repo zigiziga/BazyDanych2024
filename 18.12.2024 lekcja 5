@@ -15,3 +15,5 @@ SELECT k.nazwa, IF(COUNT(u.id_uczestnika) > 0, "Bral udzial w wyprawie", "Nie br
 
 SELECT w.nazwa, SUM(LENGTH(ew.dziennik)) AS 'Liczba znakow' FROM wyprawa AS w INNER JOIN etapy_wyprawy AS ew ON w.id_wyprawy = ew.idWyprawy GROUP BY w.nazwa HAVING SUM(LENGTH(ew.dziennik)) < 400;
 SELECT w.nazwa, (SUM(z.waga * e.ilosc) / COUNT(DISTINCT(u.id_uczestnika))) AS sw FROM wyprawa AS w LEFT JOIN uczestnicy AS u ON w.id_wyprawy = u.id_wyprawy LEFT JOIN ekwipunek AS e ON u.id_uczestnika = e.idKreatury LEFT JOIN zasob AS z ON e.idZasobu = z.idZasobu GROUP BY w.nazwa HAVING sw > 0;
+
+SELECT k.nazwa, datediff(w.data_rozpoczecia, k.dataUr) FROM kreatura AS k LEFT JOIN uczestnicy AS u ON k.idKreatury = u.id_uczestnika LEFT JOIN wyprawa AS w ON u.id_wyprawy = w.id_wyprawy RIGHT JOIN etapy_wyprawy AS ew ON w.id_wyprawy = ew.idWyprawy LEFT JOIN sektor AS s ON ew.sektor = s.id_sektora WHERE s.id_sektora = 7;
